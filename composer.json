@@ -1,0 +1,40 @@
+{
+	"name": "mvccore/example-cdcol-extended-models",
+	"type": "project",
+	"description": "MvcCore Example - CD collection - classic CRUD example with default SQLite database and extended models.",
+	"keywords": [
+		"mvccore",
+		"framework",
+		"crud",
+		"crud sample",
+		"crud application",
+		"cd albums",
+		"cds",
+		"albums",
+		"cd collection",
+		"extended",
+		"models"
+	],
+	"license": ["BSD-3-Clause"],
+	"authors": [{
+		"name": "Tom Flidr",
+		"homepage": "https://github.com/tomFlidr"
+	}],
+	"require": {
+		"php": ">=5.4.0",
+		"mvccore/mvccore": "^5.1",
+		"mvccore/ext-form": "^5.1",
+		"mvccore/ext-form-field-text": "^5.1",
+		"mvccore/ext-form-field-numeric": "^5.1",
+		"mvccore/ext-form-field-button": "^5.1",
+		"mvccore/ext-view-helper-assets": "^5.0",
+		"mvccore/ext-auth-basic": "^5.0",
+		"mvccore/ext-debug-tracy": "^5.0",
+		"mvccore/ext-debug-tracy-mvccore": "^5.0",
+		"mvccore/ext-debug-tracy-routing": "^5.0",
+		"mvccore/ext-debug-tracy-session": "^5.0",
+		"mvccore/ext-debug-tracy-db": "^5.0",
+		"mvccore/ext-model-db-sqlite": "^5.1"
+	},
+	"minimum-stability": "stable"
+}

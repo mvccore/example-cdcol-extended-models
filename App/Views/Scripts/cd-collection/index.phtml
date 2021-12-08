@@ -1,0 +1,41 @@
+<?php /** @var \MvcCore\View $this */ ?>
+<?php /** @var $albums \App\Models\Album[] */ ?>
+
+<a 
+	class="head-btn btn btn-wide btn-no-visiting" 
+	href="<?=$url(':Create')?>"><span><b>New album</b></span></a>
+
+<h1>CD Collection</h1>
+
+<?php if (!$albums): ?>
+	<p>No albums in database. To create, click to 'New Album' button.</p>
+<?php else: ?>
+	<table class="cd-collection-items theme">
+		<thead>
+			<tr>
+				<th class="right">Id</th>
+				<th>Title</th>
+				<th>Interpret</th>
+				<th class="right">Year</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($albums as $id => $album): ?>
+				<tr>
+					<td class="right"><?=$album->Id?></td>
+					<td><a href="<?=$url(':Edit', ['id'	=> $album->Id])?>"><?=$album->Title?></a></td>
+					<td><?=$album->Interpret?></td>
+					<td class="right"><?=$album->Year?></td>
+					<td class="center">
+						<form class="delete" action="<?=$url(':Delete', ['absolute' => TRUE])?>" method="post">
+							<input type="hidden" name="<?=$csrfName?>" value="<?=$csrfValue?>" />
+							<input type="hidden" name="id" value="<?=$album->Id?>" />
+							<input type="submit" value="Delete" />
+						</form>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php endif; ?>
