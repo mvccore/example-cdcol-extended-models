@@ -23,14 +23,14 @@
 		<tbody>
 			<?php foreach ($albums as $id => $album): ?>
 				<tr>
-					<td class="right"><?=$album->Id?></td>
-					<td><a href="<?=$url(':Edit', ['id'	=> $album->Id])?>"><?=$album->Title?></a></td>
-					<td><?=$album->Interpret?></td>
-					<td class="right"><?=$album->Year?></td>
+					<td class="right"><?=$album->GetId()?></td>
+					<td><a href="<?=$url(':Edit', ['id'	=> $album->GetId()])?>"><?=$escape($album->GetTitle())?></a></td>
+					<td><?=$escape($album->GetInterpret())?></td>
+					<td class="right"><?=$escape($album->GetYear())?></td>
 					<td class="center">
 						<form class="delete" action="<?=$url(':Delete', ['absolute' => TRUE])?>" method="post">
 							<input type="hidden" name="<?=$csrfName?>" value="<?=$csrfValue?>" />
-							<input type="hidden" name="id" value="<?=$album->Id?>" />
+							<input type="hidden" name="id" value="<?=$album->GetId()?>" />
 							<input type="submit" value="Delete" />
 						</form>
 					</td>
