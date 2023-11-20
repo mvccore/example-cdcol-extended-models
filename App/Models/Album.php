@@ -10,7 +10,7 @@ class Album extends \MvcCore\Ext\Models\Db\Models\SQLite {
 	/**
 	 * @column id
 	 * @keyPrimary
-	 * @var int
+	 * @var ?int
 	 */
 	protected $id;
 	/**
