@@ -20,6 +20,17 @@ class Bootstrap {
 
 
 		/**
+		 * Set up old protection CSRF type and old PHPDocs syntax 
+		 * to keep maximum compatibility for this example:
+		 */
+		$app
+			//->SetCsrfProtection($app::CSRF_PROTECTION_COOKIE) // new way, best to  work in multiple tabs
+			->SetCsrfProtection($app::CSRF_PROTECTION_FORM_INPUT) // old, but most compatible way
+			//->SetAttributesAnotations(TRUE); // PHP >= 8.0
+			->SetAttributesAnotations(FALSE); // PHP < 8.0 compatibility
+
+
+		/**
 		 * Uncomment this line before generate any assets into temporary directory, before application
 		 * packing/building, only if you want to pack application without JS/CSS/fonts/images inside
 		 * result PHP package and you want to have all those files placed on hard drive.

@@ -29,7 +29,9 @@
 					<td class="right"><?=$escape($album->GetYear())?></td>
 					<td class="center">
 						<form class="delete" action="<?=$url(':Delete', ['absolute' => TRUE])?>" method="post">
-							<input type="hidden" name="<?=$csrfName?>" value="<?=$csrfValue?>" />
+							<?php if ($this->csrfName !== NULL): ?>
+								<input type="hidden" name="<?=$csrfName?>" value="<?=$csrfValue?>" />
+							<?php endif; ?>
 							<input type="hidden" name="id" value="<?=$album->GetId()?>" />
 							<input type="submit" value="Delete" />
 						</form>

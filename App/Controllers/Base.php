@@ -14,13 +14,31 @@ class Base extends \MvcCore\Controller
 	public function Init() {
 		parent::Init();
 		// when any CSRF token is outdated or not the same - sign out user by default
-		\MvcCore\Ext\Form::AddCsrfErrorHandler(function (\MvcCore\Ext\Form $form, $errorMsg) {
-			\MvcCore\Ext\Auths\Basics\User::LogOut();
-			self::Redirect($this->Url(
-				'Index:Index',
-				['absolute' => TRUE, 'sourceUrl'	=> rawurlencode($form->GetErrorUrl())]
-			));
-		});
+		$app = $this->application;
+		if ($app->GetCsrfProtection() === $app::CSRF_PROTECTION_FORM_INPUT) {
+			\MvcCore\Ext\Form::AddCsrfErrorHandler(function (\MvcCore\Ext\Form $form, $errorMsg) {
+				$sourceUrl = $form->GetErrorUrl() !== NULL
+					? $form->GetErrorUrl()
+					: $form->GetSuccessUrl();
+				$this->handleCsrfError($sourceUrl);
+				return FALSE;
+			});
+		} else {
+			$app->AddCsrfErrorHandler(function (\MvcCore\IRequest $req, \MvcCore\IResponse $res) {
+				$this->handleCsrfError($this->Url('Index:Index'));
+				return FALSE;
+			});
+		}
+	}
+
+	protected function handleCsrfError ($sourceUrl) {
+		\MvcCore\Ext\Auths\Basics\User::LogOut();
+		self::Redirect($this->Url(
+			'Index:Index', [
+				'absolute'	=> TRUE,
+				'sourceUrl'	=> rawurlencode($sourceUrl ?: '')
+			]
+		));
 	}
 
 	public function PreDispatch () {
