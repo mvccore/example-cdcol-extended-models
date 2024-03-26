@@ -8,7 +8,7 @@ use \App\Models,
 
 class CdCollection extends Base {
 
-	/** @var \MvcCore\Ext\ModelForms\Form */
+	/** @var Models\Album */
 	protected $album;
 
 	/**
