@@ -85,7 +85,7 @@ class CdCollection extends Base {
 			) = $this->getVirtualDeleteForm()->SetUpCsrf();
 		}
 		$this->view->Js('varFoot')
-			->Prepend(self::$staticPath . '/js/List.js');
+			->Prepend($this->application->GetPathStatic() . '/js/List.js');
 	}
 
 	/**

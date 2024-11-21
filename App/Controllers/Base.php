@@ -69,9 +69,10 @@ class Base extends \MvcCore\Controller
 	}
 
 	private function _preDispatchSetUpBundles () {
-		$cfgAssets = \MvcCore\Config::GetConfigSystem()->assets;
-		\MvcCore\Ext\Views\Helpers\Assets::SetGlobalOptions((array) $cfgAssets);
-		$static = self::$staticPath;
+		\MvcCore\Ext\Views\Helpers\Assets::SetGlobalOptions(
+			(array) \MvcCore\Config::GetConfigSystem()->assets
+		);
+		$static = $this->application->GetPathStatic();
 		$this->view->Css('fixedHead')
 			->Append($static . '/css/components/resets.css')
 			->Append($static . '/css/components/old-browsers-warning.css')
