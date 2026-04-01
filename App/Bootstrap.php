@@ -2,6 +2,8 @@
 
 namespace App;
 
+use \MvcCore\Application\IConstants as AppConsts;
+
 class Bootstrap {
 
 	/**
@@ -17,15 +19,13 @@ class Bootstrap {
 			$app->SetDebugClass('MvcCore\Ext\Debugs\Tracy');
 
 
-		/**
-		 * Set up old protection CSRF type and old PHPDocs syntax 
-		 * to keep maximum compatibility for this example:
-		 */
-		$app
-			//->SetCsrfProtection($app::CSRF_PROTECTION_COOKIE) // new way, best to  work in multiple tabs
-			->SetCsrfProtection($app::CSRF_PROTECTION_FORM_INPUT) // old, but most compatible way
-			//->SetAttributesAnotations(TRUE); // PHP >= 8.0
-			->SetAttributesAnotations(FALSE); // PHP < 8.0 compatibility
+		
+		// PHP 8+ and Attributes anotation:
+		$app->SetAttributesAnotations(TRUE);
+		
+		// for new browsers supporting cookie with SameSite=Strict:
+		$app->SetSecurityProtection(AppConsts::SECURITY_PROTECTION_COOKIE);
+		
 
 
 		/**

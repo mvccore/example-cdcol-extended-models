@@ -15,8 +15,8 @@ class Base extends \MvcCore\Controller
 		parent::Init();
 		// when any CSRF token is outdated or not the same - sign out user by default
 		$app = $this->application;
-		if ($app->GetCsrfProtection() === $app::CSRF_PROTECTION_FORM_INPUT) {
-			\MvcCore\Ext\Form::AddCsrfErrorHandler(function (\MvcCore\Ext\Form $form, $errorMsg) {
+		if (($app->GetSecurityProtection() & $app::SECURITY_PROTECTION_FORM_TOKEN) != 0) {
+			$this->application->AddSecurityErrorHandler(function ($req, $res, \MvcCore\Ext\Form $form) {
 				$sourceUrl = $form->GetErrorUrl() !== NULL
 					? $form->GetErrorUrl()
 					: $form->GetSuccessUrl();
@@ -24,7 +24,7 @@ class Base extends \MvcCore\Controller
 				return FALSE;
 			});
 		} else {
-			$app->AddCsrfErrorHandler(function (\MvcCore\IRequest $req, \MvcCore\IResponse $res) {
+			$this->application->AddSecurityErrorHandler(function (\MvcCore\IRequest $req, \MvcCore\IResponse $res) {
 				$this->handleCsrfError($this->Url('Index:Index'));
 				return FALSE;
 			});

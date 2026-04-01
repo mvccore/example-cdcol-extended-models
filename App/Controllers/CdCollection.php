@@ -78,7 +78,7 @@ class CdCollection extends Base {
 		$this->view->title = 'CD Collection';
 		$this->view->albums = Models\Album::GetAll();
 		$app = $this->application;
-		if ($app->GetCsrfProtection() === $app::CSRF_PROTECTION_FORM_INPUT) {
+		if (($app->GetSecurityProtection() & $app::SECURITY_PROTECTION_FORM_TOKEN) != 0) {
 			// old, but most compatible way
 			list(
 				$this->view->csrfName, $this->view->csrfValue
@@ -137,14 +137,13 @@ class CdCollection extends Base {
 	 */
 	public function DeleteAction () {
 		$app = $this->application;
-		if ($app->GetCsrfProtection() === $app::CSRF_PROTECTION_FORM_INPUT) {
+		if (($app->GetSecurityProtection() & $app::SECURITY_PROTECTION_FORM_TOKEN) != 0) {
 			$form = $this->getVirtualDeleteForm();
 			$form->SubmitCsrfTokens($_POST); // old, but most compatible way
 			if (!$form->GetErrors())
 				$this->album->Delete();
 		} else {
-			if ($app->ValidateCsrfProtection()) 
-				$this->album->Delete();
+			$this->album->Delete();
 		}
 		self::Redirect($this->Url(':Index'));
 	}
